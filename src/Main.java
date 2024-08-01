@@ -57,7 +57,7 @@ public class Main {
                         if (no.getEsq() == null && no.getDir() == null) {  // Verifica se o nó é uma folha (não tem filhos)
                             System.out.println("O nó é uma folha.");     // Exibe uma mensagem indicando que o nó é uma folha
                         } else if (no.getEsq() != null || no.getDir() != null) { //Se ele não for uma folha
-                            System.out.println("O nó é um nó interno.");   // Exibe uma mensagem indicando que o nó é um nó interno (tem filhos)
+                            System.out.println("O nó é um nó pai.");   // Exibe uma mensagem indicando que o nó é um nó interno (tem filhos)
                         }
                         if (no == arvore.getRaiz()) {                      // Verifica se o nó é a raiz da árvore
                             System.out.println("O nó é a raiz da árvore.");   // Exibe uma mensagem indicando que o nó é a raiz da árvore
