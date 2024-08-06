@@ -77,7 +77,7 @@ public class Main {
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
-            Thread.sleep(2500);
+            Thread.sleep(1500);
             limparConsole();
         }
 

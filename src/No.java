@@ -9,27 +9,27 @@ public class No {
         this.dir = null;
     }
 
-    public int getValor() {  //retorna o valor armazenado no nó
+    public int getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {  //define um novo valor para o nó
+    public void setValor(int valor) {
         this.valor = valor;
     }
 
-    public No getEsq() {  //retorna o filho esquerdo do nó (ou null se não houver)
+    public No getEsq() {
         return esq;
     }
 
-    public void setEsq(No esq) {  //define um novo filho esquerdo para o nó
+    public void setEsq(No esq) {
         this.esq = esq;
     }
 
-    public No getDir() {  //retorna o filho direito do nó (ou null se não houver)
+    public No getDir() {
         return dir;
     }
 
-    public void setDir(No dir) {  //define um novo filho direito para o nó
+    public void setDir(No dir) {
         this.dir = dir;
     }
 }
