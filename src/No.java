@@ -1,7 +1,7 @@
 public class No {
     private int valor;  //valor armazenado no nó
-    private No esq;   //o filho esquerdo do nó (outro nó ou null se não houver filho esquerdo)
-    private No dir;  //o filho direito do nó (outro nó ou null se não houver filho direito)
+    private No esq;   //o filho esquerdo do nó (null se não houver filho esquerdo)
+    private No dir;  //o filho direito do nó (null se não houver filho direito)
 
     public No(int valor) {
         this.valor = valor;

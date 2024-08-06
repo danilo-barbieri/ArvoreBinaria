@@ -6,7 +6,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int opcao = 0;
 
-        while (opcao != 7) { // loop continua até que o usuário escolha a op 5
+        while (opcao != 7) { // loop continua até que o usuário escolha a op 6
             System.out.println("\nMenu:");
             System.out.println("1. Inserir valor");
             System.out.println("2. Remover valor");
@@ -51,21 +51,18 @@ public class Main {
                 case 6:
                     System.out.print("Digite o valor a ser buscado: ");
                     int valorBuscar = scanner.nextInt();
-                    No no = arvore.buscar(arvore.getRaiz(), valorBuscar);  // Busca o valor na árvore, começando pela raiz
-                    if (no != null) {                                      // Verifica se o valor foi encontrado
+                    No no = arvore.buscar(arvore.getRaiz(), valorBuscar);  // busca o valor na árvore, começando pela raiz
+                    if (no != null) {                                       // se o valor foi encontrado
                         System.out.println("Valor encontrado!");
-                        if (no.getEsq() == null && no.getDir() == null) {  // Verifica se o nó é uma folha (não tem filhos)
-                            System.out.println("O nó é uma folha.");     // Exibe uma mensagem indicando que o nó é uma folha
-                        } else if (no.getEsq() != null || no.getDir() != null) { //Se ele não for uma folha
-                            System.out.println("O nó é um nó pai.");   // Exibe uma mensagem indicando que o nó é um nó interno (tem filhos)
-                        }
-                        if (no == arvore.getRaiz()) {                      // Verifica se o nó é a raiz da árvore
-                            System.out.println("O nó é a raiz da árvore.");   // Exibe uma mensagem indicando que o nó é a raiz da árvore
+                        if (no.getEsq() == null && no.getDir() == null) {  // se o nó é uma folha
+                            System.out.println("O nó é uma folha.");     // indica que o nó é uma folha
+                        } else if (no == arvore.getRaiz()) {                  //  se o nó é a raiz da árvore
+                            System.out.println("O nó é a raiz da árvore."); // indica que o nó é a raiz da árvore
                         } else {
-                            System.out.println("O nó é um filho.");          // Exibe uma mensagem indicando que o nó é um filho (não é a raiz)
+                            System.out.println("O nó é um filho.");     // indica que o nó é um filho
                         }
                     } else {
-                        System.out.println("Valor não encontrado!");        // Exibe uma mensagem de erro se o valor não foi encontrado
+                        System.out.println("Valor não encontrado!");        // se o valor não foi encontrado
                     }
                     break;
 
@@ -77,16 +74,9 @@ public class Main {
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
-            Thread.sleep(1500);
-            limparConsole();
+
         }
 
         scanner.close();
-    }
-
-    public static void limparConsole() {
-        for (int i = 0; i < 18; i++) {
-            System.out.println();
-        }
     }
 }
