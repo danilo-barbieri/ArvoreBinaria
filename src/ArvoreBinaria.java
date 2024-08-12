@@ -13,20 +13,20 @@ public class ArvoreBinaria {
             No atual = this.raiz; // começa do nó raiz
             No pai = null; // inicia pai como null
             boolean esquerda = false; // inicia esquerda como false
-            while (atual != null) { // percorre até encontrar um nó vazio
-                if (novoNo.getValor() < atual.getValor()) { // se novono é menor que atual
+            while (atual != null) {
+                if (novoNo.getValor() < atual.getValor()) { // se novoNo é menor que atual, segue a esquerda
                     pai = atual;
                     atual = atual.getEsq(); // move para esquerda
                     esquerda = true;
-                } else { // novo nó maior que atual
+                } else { // novo nó maior que atual, segue para a direita
                     pai = atual;
                     atual = atual.getDir(); // move para a direita
                     esquerda = false;
                 }
             }
-            if (esquerda) { //adiciona nó a esquerda
+            if (esquerda) { // true
                 pai.setEsq(novoNo); // add novo nó como filho esquerdo do pai
-            } else {
+            } else { // false
                 pai.setDir(novoNo); // add novo nó como filho direito do pai
             }
         }
@@ -38,7 +38,9 @@ public class ArvoreBinaria {
 
     public void preOrdem(No no) {
         if (no == null) {
+            System.out.println("Não há elementos na árvore");
             return;
+
         }
         System.out.println(no.getValor()); // imprime nó
         preOrdem(no.getEsq()); // chama recursivamente esquerda
@@ -47,6 +49,7 @@ public class ArvoreBinaria {
 
     public void emOrdem(No no) {
         if (no == null) {
+            System.out.println("Não há elementos na árvore");
             return;
         }
         emOrdem(no.getEsq()); // chama recursivamente esquerda
@@ -56,6 +59,7 @@ public class ArvoreBinaria {
 
     public void posOrdem(No no) {
         if (no == null) {
+            System.out.println("Não há elementos na árvore");
             return;
         }
         posOrdem(no.getEsq()); // chama recursivamente esquerda
@@ -63,8 +67,11 @@ public class ArvoreBinaria {
         System.out.println(no.getValor()); // imprime nó
     }
 
-    void remover(int valor) {
-        raiz = remover(raiz, valor); // atualiza raiz
+    private No encontrarMenorNo(No no) { // encontra menor nó apartir do nó fornecido
+        while (no.getEsq() != null) { // enquanto tiver nó esquerdo
+            no = no.getEsq(); // move para o filho esquerdo
+        }
+        return no; // retorna o no mais a esquerda, que tem o menor valor
     }
 
     private No remover(No no, int valor) { // recebe nó e valor a ser removido
@@ -72,48 +79,50 @@ public class ArvoreBinaria {
             return null;
         }
 
-        if (valor < no.getValor()) {       // se o valor a ser removido é menor que o valor do nó atual, está na subárvore esquerda
-            no.setEsq(remover(no.getEsq(), valor));             // chamada recursiva para remover o valor da subárvore esquerda
-        } else if (valor > no.getValor()) {  // se o valor a ser removido é maior que o valor do nó atual, está na subárvore direita
-            no.setDir(remover(no.getDir(), valor));             // chamada recursiva para remover o valor da subárvore direita
-        } else {                                   // se o valor é igual ao valor do nó atual, este é o nó a ser removido
-            // nó folha (sem filhos)
-            if (no.getEsq() == null && no.getDir() == null) { // confirma que o nó não tem filhos (folha)
-                return null;                                    // retorna o nó null, removendo-o
+        if (valor < no.getValor()) { // se valor menor que o valor do nó atual, está a esquerda
+            no.setEsq(remover(no.getEsq(), valor)); // chamada recursiva a esq, atual recebe filho a esq
+        } else if (valor > no.getValor()) { // se valor maior que o valor do nó atual, está a direita
+            no.setDir(remover(no.getDir(), valor)); // chamada recursiva a dir, atual recebe filho a dir
+        } else { // se valor igual encontrou o nó a ser removido
+
+            //remoção do nó sem filhos
+            if (no.getEsq() == null && no.getDir() == null) { // verifica se o nó não tem filhos (folha)
+                return null; // retorna o só null, removendo-o
             }
-            // nó com apenas um filho
-            if (no.getEsq() == null) {              // se o nó não tem filho esquerdo
-                return no.getDir();                 // retorna o filho direito, que substitui o nó atual
-            } else if (no.getDir() == null) {       // se o nó não tem filho direito
-                return no.getEsq();                 // retorna o filho esquerdo, que substituirá o nó atual
+
+            //remoção de nó com apenas um filho a direita
+            if (no.getEsq() == null) { // nó a ser removido tem apenas um filho direito
+                return no.getDir(); // se sim, retorna o filho direito para substiruir o nó
+
+            //remoção de nó com apenas um filho a esquerda
+            } else if (no.getDir() == null) { // nó a ser removido tem apenas um filho esquerdo
+                return no.getEsq(); // se sim, retorna o filho esquerdo para substiruir o nó
             }
-            // nó com dois filhos
-            No menorNo = encontrarMenorNo(no.getDir()); // encontra o nó de menor valor na subárvore direita
-            no.setValor(menorNo.getValor());            // altera o valor do no atual pelo valor do sucessor encontrado
-            no.setDir(remover(no.getDir(), menorNo.getValor())); // remove o nó que era sucessor da subárvore direita
+
+            // remoção e nó com dois filhos
+            No menorNo = encontrarMenorNo(no.getDir()); // encontra o nó de menor valor a direita do atual
+            no.setValor(menorNo.getValor()); // altera o valor do atual pelo valor do sucessor encontrado
+            no.setDir(remover(no.getDir(), menorNo.getValor())); // remove o nó que era sucessor
         }
 
-        return no; // retorna o nó atual após a remoção para atualizar as referências
+        return no; // retorna o nó atual após a remoção, atualiza pai para o nó removido
     }
 
-    private No encontrarMenorNo(No no) {      // encontra menor nó a partir do nó fornecido
-        while (no.getEsq() != null) {         // enquanto tiver no esquerdo
-            no = no.getEsq();                // move para o filho esqerdo
-        }
-        return no; // retorna o no mais a esquerda, que tem o menor valor
+    void remover(int valor) { // encapsulamento do private remover, com todos os seus métodos de remoção
+        raiz = remover(raiz, valor); // atualização raiz
     }
 
     public No buscar(No no, int valor) {
-        if (no == null) {    // verifica se o nó atual é nulo
-            return null;     // se o nó for nulo, retorna nulo, indicando que o valor não foi encontrado
+        if (no == null) {      // se o nó atual é nulo
+            return null;    // retorna nulo, o valor não foi encontrado
         }
-        if (no.getValor() == valor) {  // verifica se o valor do nó atual é igual ao valor que estamos procurando
-            return no;    // se o valor for igual, retorna o nó atual, indicando que o valor foi encontrado
+        if (no.getValor() == valor) {  // se o valor do nó atual é igual ao valor procurado
+            return no;    //o valor foi encontrado
         }
         No noEsquerda = buscar(no.getEsq(), valor);  // se o valor não for igual, procura o valor na subárvore esquerda
-        if (noEsquerda != null) { // verifica se o valor foi encontrado na subárvore esquerda
-            return noEsquerda;   // se o valor for encontrado, retorna o nó que contém o valor
+        if (noEsquerda != null) { // se o valor foi encontrado na subárvore esquerda
+            return noEsquerda;   // retorna o nó que contém o valor
         }
-        return buscar(no.getDir(), valor);  // Se o valor não for encontrado na  esquerda, procura o valor na subárvore direita
+        return buscar(no.getDir(), valor);  // se o valor não for encontrado na subárvore esquerda, procura o valor na subárvore direita
     }
 }
